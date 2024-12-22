@@ -1,16 +1,16 @@
-import pool from './db';
+import db from './knex_db';
 
 const testConnection = async (): Promise<void> => {
-  console.log('Starting test connection...'); // Debug log
+  console.log('Starting test connection...');
 
   try {
-    const result = await pool.query<{ now: Date }>('SELECT NOW()');
-    console.log('Database time:', result.rows[0].now); // Log the database response
+    const result = await db.raw('SELECT NOW()');
+    console.log('Database connected successfully. Current time:', result.rows[0].now);
   } catch (error) {
-    console.error('Error testing the database connection:', error); // Log errors
+    console.error('Error testing the database connection:', error);
   } finally {
-    await pool.end();
-    console.log('Pool closed.'); // Confirm pool closure
+    await db.destroy();
+    console.log('Knex connection pool closed.');
   }
 };
 
