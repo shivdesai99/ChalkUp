@@ -9,6 +9,6 @@
     "forceConsistentCasingInFileNames": true, /* Enforce consistent file naming */
     "skipLibCheck": true                      /* Skip type-checking for declaration files */
   },
-  "include": ["src/**/*", "migrations/*.ts"],                    /* Include all files in the src directory */
+  "include": ["src/**/*", "migrations/*.ts", "seeds/*.ts"],                    /* Include all files in the src directory */
   "exclude": ["node_modules", "dist"]         /* Exclude node_modules and compiled output */
 }

@@ -8,7 +8,9 @@
     "build": "tsc",
     "type-check": "tsc --noEmit",
     "clean": "rm -rf dist",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "migrate": "npx knex --knexfile dist/knexfile.js migrate:latest",
+    "seed": "npx knex --knexfile dist/knexfile.js seed:run"
   },
   "keywords": [],
   "author": "",
@@ -22,7 +24,8 @@
     "jsonwebtoken": "^9.0.2",
     "knex": "^3.1.0",
     "pg": "^8.13.1",
-    "pg-connection-string": "^2.7.0"
+    "pg-connection-string": "^2.7.0",
+    "dotenv": "^16.4.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
@@ -34,7 +37,6 @@
     "@types/pg": "^8.11.10",
     "@typescript-eslint/eslint-plugin": "^8.18.1",
     "@typescript-eslint/parser": "^8.18.1",
-    "dotenv": "^16.4.7",
     "eslint": "^9.17.0",
     "globals": "^15.14.0",
     "ts-node": "^10.9.2",
