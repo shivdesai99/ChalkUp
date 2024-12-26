@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import db from '../db/knex_db';
+import verifyToken, { AuthenticatedRequest } from '../middleware/verifyToken';
 
 const router = express.Router();
 
@@ -26,14 +27,14 @@ router.post('/register', async (req: Request, res: Response): Promise<void> => {
             ['id']
           );
       
-          res.status(201).json({
-            message: 'User registered successfully.',
-            user: {
-              id: newUserId,
-              email,
-              name,
-            },
-          });
+        res.status(201).json({
+        message: 'User registered successfully.',
+        user: {
+            id: newUserId,
+            email,
+            name,
+        },
+        });
           
     } catch (error) {
         console.error('Error during registration:', error);
@@ -63,14 +64,12 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
             return 
         }
 
-        // Generate a JWT
         const token = jwt.sign(
-            { id: user.id, email: user.email, name: user.name }, // Payload
-            process.env.JWT_SECRET as string, // Secret key from .env
-            { expiresIn: '1h' } // Token expiration time
+            { id: user.id, email: user.email, name: user.name },
+            process.env.JWT_SECRET as string,
+            { expiresIn: '30d' }
         );
 
-        // Return success response
         res.status(200).json({
             message: 'Login successful.',
             token,
@@ -80,9 +79,35 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
                 name: user.name,
             },
         });
-        
+
     } catch (error) {
         console.error('Error during login:', error);
+        res.status(500).json({ message: 'Server error. Please try again later.' });
+    }
+});
+
+router.get('/protected', verifyToken, (req: AuthenticatedRequest, res: Response) => {
+    const user = req.user;
+    res.status(200).json({
+        message: 'Access to protected route granted.',
+        user,
+    });
+});
+
+router.get('/me', verifyToken, async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+    try {
+        const user = req.user;
+        if (!user) {
+            res.status(404).json({ message: 'User not found.' });
+            return;
+        }
+        res.status(200).json({
+            message: 'User details fetched successfully.',
+            user,
+        });
+
+    } catch (error) {
+        console.error('Error fetching user details:', error);
         res.status(500).json({ message: 'Server error. Please try again later.' });
     }
 });
