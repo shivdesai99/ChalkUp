@@ -1,23 +1,17 @@
-import { Provider as PaperProvider } from "react-native-paper";
-import { View, Text } from "react-native";
-import { styled } from "nativewind";
-import { Button as PaperButton } from "react-native-paper";
-
-const Button = styled(PaperButton);
+import React from "react";
+import { Provider as PaperProvider } from "react-native-paper"; // Provides theming and components for React Native Paper.
+import { NavigationContainer } from "@react-navigation/native"; // Wraps the app with navigation capabilities.
+import AuthNavigation from "./src/navigation/AuthNavigation"; // Handles navigation for authentication screens.
+import { StatusBar } from "expo-status-bar"; // Provides a consistent status bar across platforms.
 
 export default function App() {
   return (
     <PaperProvider>
-      <View className="flex-1 items-center justify-center bg-gray-100">
-        <Text className="text-lg text-gray-800">Welcome to ChalkUp!</Text>
-        <Button
-          className="bg-blue-500 text-white mt-4"
-          mode="contained"
-          onPress={() => console.log("Button Pressed!")}
-        >
-          Test Button
-        </Button>
-      </View>
+      <NavigationContainer>
+        {/* AuthNavigation manages routes like LoginScreen and SignUpScreen */}
+        <AuthNavigation />
+      </NavigationContainer>
+      <StatusBar style="auto" />
     </PaperProvider>
   );
 }
