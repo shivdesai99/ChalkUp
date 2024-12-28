@@ -1,7 +1,12 @@
 import React, { useState } from "react";
+import { ActivityIndicator } from "react-native";
+import { TextInput, Button } from "react-native-paper";
+import { styled } from "nativewind";
 import { View, Text } from "react-native";
-import { TextInput, Button, ActivityIndicator } from "react-native-paper";
 import { login } from "../../api/auth";
+
+const StyledView = styled(View);
+const StyledText = styled(Text);
 
 interface LoginFormProps {
     onLoginSuccess: (token: string) => void;
@@ -36,8 +41,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
     };
 
     return (
-        <View>
-            <Text className="text-2xl font-bold mb-5 text-center">Login</Text>
+        <StyledView className="bg-surface p-5 rounded-md shadow-medium">
+            <StyledText className="text-xl font-bold mb-5 text-center text-textPrimary">
+                Login
+            </StyledText>
             <TextInput
                 label="Email"
                 value={email}
@@ -45,7 +52,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
                 className="mb-4"
                 placeholder="Enter your email"
                 keyboardType="email-address"
-                mode="outlined"
+                theme={{ colors: { text: "#FFFFF0", primary: "#4169E1" } }}
             />
             <TextInput
                 label="Password"
@@ -54,17 +61,25 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
                 className="mb-4"
                 placeholder="Enter your password"
                 secureTextEntry
-                mode="outlined"
+                theme={{ colors: { text: "#FFFFF0", primary: "#4169E1" } }}
             />
-            {error && <Text className="text-red-500 mb-4 text-center">{error}</Text>}
+            {error && (
+                <StyledText className="text-red-500 mb-4 text-center">{error}</StyledText>
+            )}
             {isLoading ? (
-                <ActivityIndicator animating={true} />
+                <ActivityIndicator animating={true} color="#4169E1" />
             ) : (
-                <Button mode="contained" onPress={handleLogin} className="mt-2">
+                <Button
+                    mode="contained"
+                    onPress={handleLogin}
+                    className="mt-2"
+                    buttonColor="#4169E1"
+                    textColor="#FFFFF0"
+                >
                     Login
                 </Button>
             )}
-        </View>
+        </StyledView>
     );
 };
 
