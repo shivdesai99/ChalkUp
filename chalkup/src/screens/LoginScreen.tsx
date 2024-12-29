@@ -25,6 +25,9 @@ const LoginScreen: React.FC = () => {
 
     return (
         <StyledView className="flex-1 justify-center px-5 bg-background">
+            <StyledText className="text-6xl font-bold text-center text-primary mb-8">
+                ChalkUp
+            </StyledText>
             <StyledView className="space-y-8">
                 <LoginForm onLoginSuccess={handleLoginSuccess} />
                 <StyledView className="items-center">
