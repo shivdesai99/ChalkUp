@@ -1,21 +1,23 @@
 import React from "react";
 import { Alert } from "react-native";
 import LoginForm from "../components/forms/LoginForm";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
 import { styled } from "nativewind";
 import { View, Text } from "react-native";
 import { Button } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
+import { useAuth } from "../context/AuthContext";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 
 const LoginScreen: React.FC = () => {
     const navigation = useNavigation();
+    const { setUser, setToken } = useAuth();
 
-    const handleLoginSuccess = async (token: string) => {
+    const handleLoginSuccess = async (token: string, user: { id: number; name: string; email: string }) => {
         try {
-            await AsyncStorage.setItem("authToken", token);
+            setToken(token);
+            setUser(user);
             Alert.alert("Login Successful", "You have successfully logged in!");
             navigation.navigate("Home" as never);
         } catch (error) {

@@ -1,21 +1,28 @@
 import React from "react";
 import { Alert } from "react-native";
 import SignUpForm from "../components/forms/SignUpForm";
-import { useNavigation } from "@react-navigation/native";
 import { styled } from "nativewind";
 import { View, Text } from "react-native";
 import { Button } from "react-native-paper";
-
+import { useNavigation } from "@react-navigation/native";
+import { useAuth } from "../context/AuthContext";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
 
 const SignUpScreen: React.FC = () => {
     const navigation = useNavigation();
+    const { setUser, setToken } = useAuth();
 
-    const handleSignUpSuccess = () => {
-        Alert.alert("Sign Up Successful", "Your account has been created!");
-        navigation.navigate("Login" as never);
+    const handleSignUpSuccess = async (token: string, user: { id: number; name: string; email: string }) => {
+        try {
+            setToken(token);
+            setUser(user);
+            Alert.alert("Sign Up Successful", "Your account has been created!");
+            navigation.navigate("Home" as never);
+        } catch (error) {
+            Alert.alert("Error", "An error occurred while saving your session. Please try again.");
+        }
     };
 
     return (

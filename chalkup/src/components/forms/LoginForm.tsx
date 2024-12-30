@@ -9,7 +9,10 @@ const StyledView = styled(View);
 const StyledText = styled(Text);
 
 interface LoginFormProps {
-    onLoginSuccess: (token: string) => void;
+    onLoginSuccess: (
+        token: string,
+        user: { id: number; name: string; email: string }
+    ) => void;
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
@@ -31,8 +34,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
 
         setIsLoading(true);
         try {
-            const response = await login(email, password); // Call the API
-            onLoginSuccess(response.token);
+            const response = await login(email, password);
+            onLoginSuccess(response.token, response.user);
         } catch (err: any) {
             setError(err.message || "Invalid email or password.");
         } finally {

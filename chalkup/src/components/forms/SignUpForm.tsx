@@ -9,7 +9,10 @@ const StyledView = styled(View);
 const StyledText = styled(Text);
 
 interface SignUpFormProps {
-    onSignUpSuccess: () => void;
+    onSignUpSuccess: (
+        token: string,
+        user: { id: number; name: string; email: string }
+    ) => void; // Updated to pass user details
 }
 
 const SignUpForm: React.FC<SignUpFormProps> = ({ onSignUpSuccess }) => {
@@ -33,8 +36,8 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSignUpSuccess }) => {
 
         setIsLoading(true);
         try {
-            await register(email, password, name); // Call the register API
-            onSignUpSuccess();
+            const response = await register(email, password, name); // Call the register API
+            onSignUpSuccess(response.token, response.user); // Pass token and user details
         } catch (err: any) {
             setError(err.message || "An error occurred. Please try again.");
         } finally {
