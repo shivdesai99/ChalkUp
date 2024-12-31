@@ -4,6 +4,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth';
+import groupRoutes from './routes/group';
 
 const envPath =
   process.env.NODE_ENV === 'production'
@@ -20,6 +21,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.use('/auth', authRoutes);
+app.use('/group', groupRoutes);
+
 
 
 const PORT: number = parseInt(process.env.PORT || '5000', 10);

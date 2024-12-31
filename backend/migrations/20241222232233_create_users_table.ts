@@ -11,7 +11,7 @@ export async function up(knex: Knex): Promise<void> {
     });
     console.log('Table created successfully');
   } catch (error) {
-    console.error('Error creating table:', error);
+    console.error('Error creating users table:', error);
   }
 }
 
