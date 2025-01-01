@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth';
 import groupRoutes from './routes/group';
+import userRoutes from './routes/user';
 
 const envPath =
   process.env.NODE_ENV === 'production'
@@ -22,6 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/auth', authRoutes);
 app.use('/group', groupRoutes);
+app.use('/users', userRoutes);
 
 
 

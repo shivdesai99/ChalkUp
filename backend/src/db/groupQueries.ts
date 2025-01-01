@@ -1,4 +1,4 @@
-import knex from './knex_db'; // Import the Knex instance
+import knex from './knex_db';
 
 // Fetch a group by its join code
 export const getGroupByJoinCode = async (joinCode: string) => {
@@ -23,7 +23,7 @@ export const getGroupById = async (groupId: number) => {
     }
 };
 
-// Add a new group (optional for future dynamic functionality)
+
 export const addGroup = async (name: string, sport: string, joinCode: string) => {
     try {
         const [groupId] = await knex('groups').insert(
