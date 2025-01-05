@@ -12,12 +12,12 @@ const router = express.Router();
  */
 router.get(
     '/search',
-    verifyToken, // Ensure the user is authenticated
+    verifyToken,
     [
         check('groupId')
             .isInt()
             .withMessage('Group ID must be an integer.')
-            .toInt(), // Convert to number
+            .toInt(),
         check('name')
             .isString()
             .withMessage('Name must be a string.')

@@ -1,5 +1,5 @@
-import express, { Response } from 'express';
-import { getGroupByJoinCode, getGroupById } from '../db/groupQueries';
+import express, { Request, Response } from 'express';
+import { getGroupByJoinCode, getGroupById, getGroupLeaderboard } from '../db/groupQueries';
 import { isUserInGroup, addUserToGroup, getUserGroups } from '../db/userToGroupQueries';
 import verifyToken, { AuthenticatedRequest } from '../middleware/verifyToken';
 
@@ -85,5 +85,27 @@ router.get('/:groupId', verifyToken, async (req: AuthenticatedRequest, res: Resp
     }
 });
 
+/**
+ * GET /group/:groupId/leaderboard
+ * Get the leaderboard for a specific group.
+ */
+router.get(
+    '/:groupId/leaderboard',
+    verifyToken,
+    async (req: Request, res: Response): Promise<void> => {
+        const { groupId } = req.params;
+
+        try {
+            const groupIdNum = Number(groupId);
+
+            const leaderboard = await getGroupLeaderboard(groupIdNum);
+
+            res.status(200).json(leaderboard);
+        } catch (error) {
+            console.error('Error fetching leaderboard:', error);
+            res.status(500).json({ message: 'Failed to fetch leaderboard.' });
+        }
+    }
+);
 
 export default router;

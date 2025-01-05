@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/auth';
 import groupRoutes from './routes/group';
 import userRoutes from './routes/user';
-
+import matchRoutes from './routes/match';
 const envPath =
   process.env.NODE_ENV === 'production'
     ? path.resolve(__dirname, '../.env') // For dist
@@ -24,6 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/auth', authRoutes);
 app.use('/group', groupRoutes);
 app.use('/users', userRoutes);
+app.use('/matches', matchRoutes);
 
 
 
