@@ -2,12 +2,12 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
-import HomeScreen from "../screens/HomeScreen";
+import GroupScreen from "../screens/GroupScreen";
 
 type AuthStackParamList = {
     Login: undefined;
     SignUp: undefined;
-    Home: undefined;
+    Group: undefined;
 };
 
 const Stack = createNativeStackNavigator<AuthStackParamList>();
@@ -25,8 +25,8 @@ const AuthNavigation = () => {
             <Stack.Screen name="Login" component={LoginScreen} />
             {/* Define the Sign-Up screen */}
             <Stack.Screen name="SignUp" component={SignUpScreen} />
-            {/* Define the Home screen */}
-            <Stack.Screen name="Home" component={HomeScreen} />
+            {/* Define the Group screen */}
+            <Stack.Screen name="Group" component={GroupScreen} />
         </Stack.Navigator>
     );
 };

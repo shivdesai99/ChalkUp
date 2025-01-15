@@ -3,7 +3,7 @@ import { ActivityIndicator } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { styled } from "nativewind";
 import { View, Text } from "react-native";
-import { register } from "../../api/auth";
+import { registerAPI } from "../../api/auth";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -12,7 +12,7 @@ interface SignUpFormProps {
     onSignUpSuccess: (
         token: string,
         user: { id: number; name: string; email: string }
-    ) => void; // Updated to pass user details
+    ) => void;
 }
 
 const SignUpForm: React.FC<SignUpFormProps> = ({ onSignUpSuccess }) => {
@@ -36,8 +36,8 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSignUpSuccess }) => {
 
         setIsLoading(true);
         try {
-            const response = await register(email, password, name); // Call the register API
-            onSignUpSuccess(response.token, response.user); // Pass token and user details
+            const response = await registerAPI(email, password, name);
+            onSignUpSuccess(response.token, response.user);
         } catch (err: any) {
             setError(err.message || "An error occurred. Please try again.");
         } finally {

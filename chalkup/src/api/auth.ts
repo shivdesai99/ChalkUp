@@ -8,7 +8,7 @@ const apiClient = axios.create({
 });
 
 
-export const login = async (email: string, password: string) => {
+export const loginAPI = async (email: string, password: string) => {
     try {
         const response = await apiClient.post("/login", { email, password });
         return response.data;
@@ -21,7 +21,7 @@ export const login = async (email: string, password: string) => {
     }
 };
 
-export const register = async (email: string, password: string, name: string) => {
+export const registerAPI = async (email: string, password: string, name: string) => {
     try {
         const response = await apiClient.post("/register", { email, password, name });
         return response.data;
@@ -34,11 +34,11 @@ export const register = async (email: string, password: string, name: string) =>
     }
 };
 
-export const verifyToken = async (token: string) => {
+export const verifyTokenAPI = async (token: string) => {
     try {
         const response = await apiClient.get("/me", {
             headers: {
-                Authorization: `Bearer ${token}`,
+                authorization: `Bearer ${token}`,
             },
         });
         

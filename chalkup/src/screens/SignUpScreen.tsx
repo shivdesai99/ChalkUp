@@ -19,7 +19,7 @@ const SignUpScreen: React.FC = () => {
             setToken(token);
             setUser(user);
             Alert.alert("Sign Up Successful", "Your account has been created!");
-            navigation.navigate("Home" as never);
+            navigation.navigate("Group" as never);
         } catch (error) {
             Alert.alert("Error", "An error occurred while saving your session. Please try again.");
         }

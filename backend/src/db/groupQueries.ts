@@ -1,6 +1,5 @@
 import knex from './knex_db';
 
-// Fetch a group by its join code
 export const getGroupByJoinCode = async (joinCode: string) => {
     try {
         const group = await knex('groups').where({ join_code: joinCode }).first();
@@ -11,7 +10,6 @@ export const getGroupByJoinCode = async (joinCode: string) => {
     }
 };
 
-// Fetch a group by its ID
 export const getGroupById = async (groupId: number) => {
     try {
         console.log('groupId:', groupId);
@@ -23,17 +21,37 @@ export const getGroupById = async (groupId: number) => {
     }
 };
 
-
 export const addGroup = async (name: string, sport: string, joinCode: string) => {
     try {
         const [groupId] = await knex('groups').insert(
-        { name, sport, join_code: joinCode },
-        ['group_id']
+            { name, sport, join_code: joinCode },
+            ['group_id']
         );
         return groupId;
     } catch (error) {
         console.error('Error adding group:', error);
         throw new Error('Could not add group');
+    }
+};
+
+/**
+ * Get all groups with their respective member counts.
+ * @returns Array of groups with member counts.
+ */
+export const getAllGroups = async (): Promise<Array<{ group_id: number; name: string; member_count: number }>> => {
+    try {
+        const groups = await knex('groups')
+            .leftJoin('user_to_groups', 'groups.group_id', 'user_to_groups.group_id')
+            .select(
+                'groups.group_id',
+                'groups.name',
+                knex.raw('COUNT(user_to_groups.user_id) AS member_count')
+            )
+            .groupBy('groups.group_id', 'groups.name');
+        return groups;
+    } catch (error) {
+        console.error('Error fetching all groups with member counts:', error);
+        throw new Error('Could not fetch groups');
     }
 };
 

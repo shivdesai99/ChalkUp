@@ -3,7 +3,7 @@ import { ActivityIndicator } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { styled } from "nativewind";
 import { View, Text } from "react-native";
-import { login } from "../../api/auth";
+import { loginAPI } from "../../api/auth";
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
@@ -34,7 +34,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
 
         setIsLoading(true);
         try {
-            const response = await login(email, password);
+            const response = await loginAPI(email, password);
             onLoginSuccess(response.token, response.user);
         } catch (err: any) {
             setError(err.message || "Invalid email or password.");

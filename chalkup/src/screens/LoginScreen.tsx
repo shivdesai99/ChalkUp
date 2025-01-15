@@ -19,7 +19,7 @@ const LoginScreen: React.FC = () => {
             setToken(token);
             setUser(user);
             Alert.alert("Login Successful", "You have successfully logged in!");
-            navigation.navigate("Home" as never);
+            navigation.navigate("Group" as never);
         } catch (error) {
             Alert.alert("Error", "An error occurred while saving your session. Please try again.");
         }

@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, useContext, ReactNode } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { verifyToken } from "../api/auth";
+import { verifyTokenAPI } from "../api/auth";
 
 interface AuthContextProps {
     user: { id: number; name: string; email: string } | null;
@@ -29,7 +29,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             try {
                 const storedToken = await AsyncStorage.getItem("authToken");
                 if (storedToken) {
-                    const userData = await verifyToken(storedToken);
+                    const userData = await verifyTokenAPI(storedToken);
                     setToken(storedToken);
                     setUser(userData);
                 }
